@@ -90,7 +90,7 @@ for (rate in 1:number_of_misg_rate) {
 ```
 
 
-Imputation (~ 20 minutes)
+Imputation (~ 20 minutes for each iteration)
 
 ```{r}
 temp <- list()

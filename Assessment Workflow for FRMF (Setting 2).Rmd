@@ -24,6 +24,7 @@ Methods involved & Missing rate range
 ```{r}
 
 method_name <- c("pwMean", "FRMF", "FRMF")
+display_method_name <- c("pwMean", "RMF", "FRMF_self")
 number_of_method <- length(method_name)
 misg_rate <- seq(0.15, 0.55, length.out = 5)
 number_of_misg_rate <- length(misg_rate)
@@ -89,7 +90,7 @@ for (rate in 1:number_of_misg_rate) {
 ```
 
 
-Imputation (~ 25 minutes)
+Imputation (~ 35 minutes for each iteration)
 
 ```{r}
 temp <- list()
@@ -176,10 +177,10 @@ Plot the results
 backup <- nrmse_matrix
 backup[backup > 2] <- NA
 nrmse_result <- plot_nrmse(backup,
-                           method_name,
+                           display_method_name,
                            total_misg_rate,
                            "NRMSE",
-                           "FRMF Workflow Example Program",
+                           "FRMF Workflow (Example)",
                            panel = 5)
 print(nrmse_result)
 ```
@@ -187,7 +188,7 @@ print(nrmse_result)
 Save the plot
 
 ```{r}
-emf(file = "FRMF Workflow Example Program.emf",
+emf(file = "FRMF Workflow (Example).emf",
     width = 8,
     height = 4.8)
 print(nrmse_result)
