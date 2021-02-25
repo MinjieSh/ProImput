@@ -1,0 +1,197 @@
+---
+title: "Assessment Workflow for CAM (Setting #2)"
+output: html_notebook
+---
+
+Data
+
+```{r}
+raw_data <- readRDS("Data/raw_data_small.rds")
+```
+
+Data preprocessing
+
+```{r}
+orig_data <- raw_data
+smp <- nrow(orig_data)
+prt <- ncol(orig_data)
+smp
+prt
+```
+
+Methods involved & Missing rate range
+
+```{r}
+
+method_name <- c("pwMean", "CAM_SVT", "SVT")
+number_of_method <- length(method_name)
+misg_rate <- seq(0.15, 0.75, length.out = 5)
+number_of_misg_rate <- length(misg_rate)
+
+```
+
+Load the best parameters
+
+```{r}
+
+best_parameter <- matrix(NA,
+                         nrow = number_of_misg_rate,
+                         ncol = number_of_method)
+best_parameter[, 2] <- 10
+best_parameter[, 3] <- 40000
+
+```
+
+Number of iterations
+
+```{r}
+
+iteration <- 1
+
+```
+
+Generate the real-data-based simulated missing data
+
+```{r}
+missing_matrix <- array(0,
+                        c(
+                          number_of_misg_rate,
+                          iteration,
+                          nrow(orig_data),
+                          ncol(orig_data)
+                        ))
+
+start_time <- Sys.time()
+for (rate in 1:number_of_misg_rate) {
+  for (loop in 1:iteration) {
+    misg_data <- data_with_MV_mask_out(
+      orig_data,
+      option = "MAR",
+      parameter = misg_rate[rate],
+      keep = "max"
+    )
+    
+    missing_matrix[rate, loop, , ] <- misg_data$data_extra_MV
+  }
+}
+end_time <- Sys.time()
+end_time - start_time
+
+```
+
+
+```{r}
+total_misg_rate <- misg_rate
+for (rate in 1:number_of_misg_rate) {
+  total_misg_rate[rate] <-
+    100 * sum(is.na(missing_matrix[rate, 1, , ])) /
+    (ncol(orig_data) * nrow(orig_data))
+}
+```
+
+
+Imputation (~ 20 minutes)
+
+```{r}
+temp <- list()
+predict_matrix <- array(0,
+                        c(
+                          number_of_misg_rate,
+                          iteration,
+                          number_of_method,
+                          nrow(orig_data),
+                          ncol(orig_data)
+                        ))
+start_time <- Sys.time()
+
+for (i in 1:number_of_method) {
+  for (rate in 1:number_of_misg_rate) {
+    for (loop in 1:iteration) {
+      skip_to_next <- FALSE
+      
+      tryCatch({
+        temp[[(rate - 1) * iteration  + loop]] <-
+          impute(
+            log_data = log2(missing_matrix[rate, loop, ,]),
+            orig_data = missing_matrix[rate, loop, ,],
+            methods = method_name[i],
+            parameter = best_parameter[rate, i],
+            dim.rdc = 10,
+            cluster.num = 35
+          )
+        
+        if (i == 1 | i == 3) {
+          predict_matrix[rate, loop, i, ,] <-
+            2 ^ temp[[(rate - 1) * iteration  + loop]]$imp
+        } else {
+          predict_matrix[rate, loop, i, ,] <-
+            temp[[(rate - 1) * iteration  + loop]]$imp
+        }
+        
+        
+      }, error = function(error_condition) {
+        message('Caught an error!')
+        message(error_condition)
+        skip_to_next <- TRUE
+      }, finally = {
+        message('Success!')
+      })
+      
+      if (skip_to_next) {
+        next
+      }
+    }
+  }
+}
+end_time <- Sys.time()
+
+end_time - start_time
+
+```
+
+Evaluate using NRMSE
+
+```{r}
+nrmse_matrix <- matrix(0,
+                       nrow = number_of_misg_rate * number_of_method,
+                       ncol = iteration)
+
+
+start_time <- Sys.time()
+for (rate in 1:number_of_misg_rate) {
+  for (loop in 1:iteration) {
+    data_extra_MV <- missing_matrix[rate, loop, ,]
+    for (i in 1:number_of_method) {
+      data_imputed <- predict_matrix[rate, loop, i, ,]
+      nrmse_matrix[(rate - 1) * number_of_method + i, loop] <-
+        data_with_MV_NRMSE(orig_data, data_extra_MV, data_imputed)
+    }
+  }
+}
+end_time <- Sys.time()
+end_time - start_time
+```
+
+Plot the results
+
+```{r}
+backup <- nrmse_matrix
+nrmse_result <- plot_nrmse(backup,
+                           method_name,
+                           total_misg_rate,
+                           "NRMSE",
+                           "CAM Workflow (Example)",
+                           panel = 2)
+print(nrmse_result)
+```
+
+Save the plot
+
+```{r}
+emf(file = "CAM Workflow (Example).emf",
+    width = 8,
+    height = 4.8)
+print(nrmse_result)
+dev.off()
+```
+
