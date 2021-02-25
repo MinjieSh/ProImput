@@ -14,7 +14,7 @@ Assessment Workflow for CAM (Setting 2).Rmd
 Assessment Workflow for FRMF (Setting 2).Rmd
 ```
 ## Overview
-In our paper, We first report an assessment of eight representative methods collectively targeting three typical missing mechanisms. The selected methods are compared on both realistic simulation and real proteomics datasets, and the performance is evaluated using three quantitative measures. 
+In our paper, we first report an assessment of eight representative methods collectively targeting three typical missing mechanisms. The selected methods are compared on both realistic simulation and real proteomics datasets, and the performance is evaluated using three quantitative measures. 
 ![ProImput Workflow](images/ProImput%20Workflow.jpg)
 
 To explore a more integrative strategy for improving imputation performance, we discuss a low-rank matrix factorization framework with fused regularization on sparsity and similarity – Fused Regularization Matrix factorization (FRMF), which can naturally integrate other-omics data such as gene expression or clinical variables. 
