@@ -34,7 +34,7 @@ cos.sim.helper <- function(idx, X) {
 #' @param conv_thld - converge threshold
 #' @param lam_A - sparsity regularization term coefficient for A
 #' @param lam_S  - sparsity regularization term coefficient for S
-#' @param nbr_info - additional information to help impute X
+#' @param nbr_info_mat - additional information to help impute X
 #' @param nbr_thld - cosine similarity lower limit for "good neighbors"
 #' @param coeff_crs_rglr - cross regularization term coefficient
 #' @return An imputed matrix.
