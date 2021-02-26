@@ -36,6 +36,7 @@ Methods involved & Missing rate range
 ```{r}
 
 method_name <- c("pwMean", "CAM_SVT", "SVT")
+display_method_name <- c("Mean", "CAM_SVT", "SVT")
 number_of_method <- length(method_name)
 misg_rate <- seq(0.15, 0.75, length.out = 5)
 number_of_misg_rate <- length(misg_rate)
@@ -189,7 +190,7 @@ Plot the results
 ```{r}
 backup <- nrmse_matrix
 nrmse_result <- plot_nrmse(backup,
-                           method_name,
+                           display_method_name,
                            total_misg_rate,
                            "NRMSE",
                            "CAM Workflow (Example)",

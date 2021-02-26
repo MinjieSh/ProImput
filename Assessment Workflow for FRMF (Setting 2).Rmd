@@ -36,7 +36,7 @@ Methods involved & Missing rate range
 ```{r}
 
 method_name <- c("pwMean", "FRMF", "FRMF")
-display_method_name <- c("pwMean", "RMF", "FRMF_self")
+display_method_name <- c("Mean", "RMF", "FRMF_self")
 number_of_method <- length(method_name)
 misg_rate <- seq(0.15, 0.55, length.out = 5)
 number_of_misg_rate <- length(misg_rate)
