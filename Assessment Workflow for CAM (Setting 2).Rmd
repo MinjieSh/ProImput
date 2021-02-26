@@ -1,5 +1,5 @@
 ---
-title: "Assessment Workflow for CAM (Setting #2)"
+title: "Toy example for CAM (Setting #2)"
 output: html_notebook
 ---
 
@@ -34,33 +34,27 @@ prt
 Methods involved & Missing rate range
 
 ```{r}
-
 method_name <- c("pwMean", "CAM_SVT", "SVT")
 display_method_name <- c("Mean", "CAM_SVT", "SVT")
 number_of_method <- length(method_name)
 misg_rate <- seq(0.15, 0.75, length.out = 5)
 number_of_misg_rate <- length(misg_rate)
-
 ```
 
 Load the best parameters
 
 ```{r}
-
 best_parameter <- matrix(NA,
                          nrow = number_of_misg_rate,
                          ncol = number_of_method)
 best_parameter[, 2] <- 10
 best_parameter[, 3] <- 40000
-
 ```
 
 Number of iterations
 
 ```{r}
-
 iteration <- 1
-
 ```
 
 Generate the real-data-based simulated missing data
@@ -89,7 +83,6 @@ for (rate in 1:number_of_misg_rate) {
 }
 end_time <- Sys.time()
 end_time - start_time
-
 ```
 
 
@@ -157,9 +150,7 @@ for (i in 1:number_of_method) {
   }
 }
 end_time <- Sys.time()
-
 end_time - start_time
-
 ```
 
 Evaluate using NRMSE
