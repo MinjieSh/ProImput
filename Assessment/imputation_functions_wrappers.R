@@ -156,7 +156,7 @@ impute <- function(log_data = NULL,
         orig_data,
         dim.rdc = dim.rdc,
         cluster.num = cluster.num,
-        nPCs = nPCs,
+        nPCs = parameter,
         normalization = "std_score"
       )
       

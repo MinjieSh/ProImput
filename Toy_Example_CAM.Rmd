@@ -18,7 +18,7 @@ source("Dependencies.R")
 Data
 
 ```{r}
-raw_data <- readRDS("Data/raw_data_small.rds")
+raw_data <- readRDS("Data/raw_data_large.rds")
 ```
 
 Data preprocessing
@@ -41,14 +41,28 @@ misg_rate <- seq(0.15, 0.75, length.out = 5)
 number_of_misg_rate <- length(misg_rate)
 ```
 
+DO NOT RUN below chunk in the toy example.
+
+```{r}
+# method_name <- c("pwMean", "CAM_SVT", "SVT", "CAM_NIPALS", "NIPALS", "CAM_cmplt")
+# display_method_name <- c("Mean", "CAM_SVT", "SVT", "CAM_NIPALS", "NIPALS", "CAM_cmplt")
+# number_of_method <- length(method_name)
+# misg_rate <- seq(0.15, 0.75, length.out = 10)
+# number_of_misg_rate <- length(misg_rate)
+```
+
 Load the best parameters
 
 ```{r}
 best_parameter <- matrix(NA,
                          nrow = number_of_misg_rate,
                          ncol = number_of_method)
-best_parameter[, 2] <- 10
 best_parameter[, 3] <- 40000
+```
+
+```{r}
+best_parameter[, c(2)] <- 10 ### for toy example
+# best_parameter[, c(2, 4, 5, 6)] <- 10 ### for more
 ```
 
 Number of iterations
@@ -116,7 +130,7 @@ for (i in 1:number_of_method) {
       skip_to_next <- FALSE
       
       tryCatch({
-        temp[[(rate - 1) * iteration  + loop]] <-
+        temp <-
           impute(
             log_data = log2(missing_matrix[rate, loop, ,]),
             orig_data = missing_matrix[rate, loop, ,],
@@ -126,12 +140,13 @@ for (i in 1:number_of_method) {
             cluster.num = 35
           )
         
-        if (i == 1 | i == 3) {
+        if (i %in% c(1, 3)) { ### for toy example
+        # if (i %in% c(1, 3, 5)) { ### for more
           predict_matrix[rate, loop, i, ,] <-
-            2 ^ temp[[(rate - 1) * iteration  + loop]]$imp
+            2 ^ temp$imp
         } else {
           predict_matrix[rate, loop, i, ,] <-
-            temp[[(rate - 1) * iteration  + loop]]$imp
+            temp$imp
         }
         
         

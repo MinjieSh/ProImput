@@ -10,6 +10,8 @@ CAM_SVT <- function(misg_data,
                     cluster.num = 50,
                     lambda = 40000,
                     normalization = c("total_count", "std_score", "none")) {
+  colnames(misg_data) <- 1:ncol(misg_data)
+  
   temp <- 2 ^ SVTImpute(log2(misg_data),
                              lambda = lambda,
                              max.iters = 500)$x

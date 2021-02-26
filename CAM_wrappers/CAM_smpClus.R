@@ -11,6 +11,8 @@ CAM_smpClus <- function(misg_data,
   
   startTime <- Sys.time()
   
+  colnames(misg_data) <- 1:ncol(misg_data)
+  
   if (normalization == "total_count") {
     rec_fac <- rowSums(misg_data, na.rm = TRUE)
     

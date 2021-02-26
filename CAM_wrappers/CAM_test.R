@@ -114,7 +114,7 @@ CAM_cmplt_test <- function(grnd_truth) {
   print(data_with_MV_NRMSE(grnd_truth, misg_data, predicted))
 }
 
-CAM_smpClus_test <- function(grnd_truth) {
+CAM_smpClus_test <- function() {
   rank <- 5
   temp <- gnr_sim_data(200, 1000, rank, 0.7)
   grnd_truth <- temp$X_wo_n
@@ -140,7 +140,7 @@ CAM_smpClus_test <- function(grnd_truth) {
   
 }
 
-CAM_smpClus_iter_test <- function(grnd_truth) {
+CAM_smpClus_iter_test <- function() {
   rank <- 3
   temp <- gnr_sim_data(200, 1000, rank, 0.7)
   grnd_truth <- temp$X_wo_n

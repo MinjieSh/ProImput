@@ -10,7 +10,10 @@ CAM_smpClus_iter <- function(misg_data,
                              optimal.source.number = 5,
                              normalization = c("total_count", "std_score", "none"),
                              cheat_data = NULL,
-                             iter = 5) {
+                             iter = 2) {
+  
+  colnames(misg_data) <- 1:ncol(misg_data)
+  
   if (normalization == "total_count") {
     rec_fac <- rowSums(misg_data, na.rm = TRUE)
     

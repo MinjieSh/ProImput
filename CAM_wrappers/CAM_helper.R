@@ -13,7 +13,7 @@ CAM_helper_nnls <- function(A, X) {
       B <- B[-removeInd,]
       b <- b[-removeInd]
     }
-    S[, i] <- nnls(B, b)$x
+    S[, i] <- nnls(B, b)$X
   }
   return(S)
 }

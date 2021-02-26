@@ -10,6 +10,8 @@ CAM_NIPALS <- function(misg_data,
                        cluster.num = 50,
                        nPCs = 10,
                        normalization = c("total_count", "std_score", "none")) {
+  colnames(misg_data) <- 1:ncol(misg_data)
+  
   misg_idx <- which(is.na(misg_data))
   
   init_data <- 2 ^ completeObs(pca(

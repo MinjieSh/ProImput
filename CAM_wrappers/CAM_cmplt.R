@@ -8,6 +8,9 @@ CAM_cmplt <- function(misg_data,
                       dim.rdc = 20,
                       cluster.num = 50,
                       normalization = c("total_count", "std_score", "none")) {
+  
+  colnames(misg_data) <- 1:ncol(misg_data)
+  
   misg_idx <- which(is.na(misg_data))
   misg_rate <- apply(misg_data, 2, get_misg_rate)
   cmplt_data <- misg_data[, which(misg_rate == 0)]
