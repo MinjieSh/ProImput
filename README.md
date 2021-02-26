@@ -3,12 +3,8 @@ This is the repository of our article: Comparative assessment and outlook on met
 
 ## Installation
 1. Clone or download this GitHub repository
-2. Set up your working directory in `Dependencies.R`
-```
-setwd("YOUR_PATH/ProImput")
-```
-3. Install all the packages required in `Dependencies.R` and then source `Dependencies.R`
-4. Then play with the toy examples in the two R markdown files! 
+2. Install all the packages required in `Dependencies.R`
+3. Play with the toy examples in the two R markdown files! 
 ```
 Assessment Workflow for CAM (Setting 2).Rmd
 Assessment Workflow for FRMF (Setting 2).Rmd
