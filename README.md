@@ -4,12 +4,9 @@ This is the repository of our article: Comparative assessment and outlook on met
 ## Installation
 1. Clone or download this GitHub repository
 2. Install all the packages required in `Dependencies.R`
-3. Play with the toy examples in the two R markdown files! 
-```
-Assessment Workflow for CAM (Setting 2).Rmd
-Assessment Workflow for FRMF (Setting 2).Rmd
-```
-## Overview
+3. Play with the toy examples in `Toy_Example_CAM.Rmd` and `Toy_Example_FRMF.Rmd`! 
+
+## Paper Overview
 In our paper, we first report an assessment of eight representative methods collectively targeting three typical missing mechanisms. The selected methods are compared on both realistic simulation and real proteomics datasets, and the performance is evaluated using three quantitative measures. 
 ![ProImput Workflow](images/ProImput%20Workflow.jpg)
 
