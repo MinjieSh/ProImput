@@ -3,6 +3,18 @@ title: "Assessment Workflow for CAM (Setting #2)"
 output: html_notebook
 ---
 
+Set up your working directory
+
+```{r}
+setwd("YOUR_PATH/ProImput")
+```
+
+Install packages
+
+```{r}
+source("Dependencies.R")
+```
+
 Data
 
 ```{r}

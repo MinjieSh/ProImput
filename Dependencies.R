@@ -10,10 +10,6 @@
 # install_github("jeffwong/imputation")
 # install_github("linxihui/NNLM")
 
-############################################ 
-
-# setwd("YOUR_PATH/ProImput")
-
 ############################################
 
 # Assessment
@@ -48,6 +44,7 @@ source('CAM_wrappers/CAM_test.R')
 
 # CAM source code
 library(debCAM)
+library(limSolve)
 source("CAM/qpSum.R")
 source("CAM/sbfsnnls.R")
 source("CAM/sffsnnls.R")
