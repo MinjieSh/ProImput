@@ -36,7 +36,7 @@ impute_test <- function() {
   )
   data_with_MV[c(4, 10)] <- NA
   
-  temp_pred <- impute(data_with_MV, methods = "swKNN", 1)
+  temp_pred <- impute(data_with_MV, methods = "swKNN", parameter = 1)
   pred <- temp_pred$imp
   
   rank <- 3
