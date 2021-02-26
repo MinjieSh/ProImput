@@ -187,7 +187,6 @@ Plot the results
 
 ```{r}
 backup <- nrmse_matrix
-backup[backup > 2] <- NA
 nrmse_result <- plot_nrmse(backup,
                            display_method_name,
                            total_misg_rate,
