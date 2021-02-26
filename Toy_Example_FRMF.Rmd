@@ -41,15 +41,30 @@ misg_rate <- seq(0.15, 0.55, length.out = 5)
 number_of_misg_rate <- length(misg_rate)
 ```
 
+DO NOT RUN below chunk in the toy example.
+
+```{r}
+# method_name <- c("pwMean", "FRMF", "FRMF", "FRMF")
+# display_method_name <- c("Mean", "RMF", "FRMF_self", "FRMF_cross_patho")
+# number_of_method <- length(method_name)
+# misg_rate <- seq(0.15, 0.75, length.out = 10)
+# number_of_misg_rate <- length(misg_rate)
+# external_info <- readRDS("Data/external_data_small.rds")
+```
+
 Load the best parameters
 
 ```{r}
 best_parameter <- matrix(NA,
                          nrow = number_of_misg_rate,
                          ncol = number_of_method)
-best_parameter[, 2] <- 3
-best_parameter[, 3] <- 3
 ```
+
+```{r}
+best_parameter[, c(2, 3)] <- 3 ### for toy example
+# best_parameter[, c(2, 3, 4)] <- 3 ### for more
+```
+
 
 Number of iterations
 
@@ -93,7 +108,6 @@ for (rate in 1:number_of_misg_rate) {
 }
 ```
 
-
 Imputation (~ 35 minutes for each iteration)
 
 ```{r}
@@ -113,14 +127,16 @@ for (i in 1:number_of_method) {
     for (loop in 1:iteration) {
       if (i == 3) {
         nbr_info_mat <- missing_matrix[rate, loop, , ]
-      } else {
+      } else if(i == 4){
+        nbr_info_mat <- external_info
+      } else{
         nbr_info_mat <- NULL
       }
       
       skip_to_next <- FALSE
       
       tryCatch({
-        temp[[(rate - 1) * iteration  + loop]] <-
+        temp <-
           impute(
             log_data = missing_matrix[rate, loop, , ],
             methods = method_name[i],
@@ -129,7 +145,7 @@ for (i in 1:number_of_method) {
           )
         
         predict_matrix[rate, loop, i, , ] <-
-          temp[[(rate - 1) * iteration  + loop]]$imp
+          temp$imp
         
         
       }, error = function(error_condition) {
