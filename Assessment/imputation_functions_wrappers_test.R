@@ -5,10 +5,10 @@ impute_test <- function() {
                          byrow = FALSE)
   data_with_MV[sample(20, 4)] <- NA
   
-  temp_pred <- impute(data_with_MV, "pwHalfMin (log)")
+  temp_pred <- impute(data_with_MV, methods = "pwHalfMin_log")
   pred <- temp_pred$imp
   
-  temp_pred <- impute(data_with_MV, "pwMean")
+  temp_pred <- impute(data_with_MV, methods = "pwMean")
   pred <- temp_pred$imp
   
   data_with_MV <- matrix(
@@ -22,7 +22,7 @@ impute_test <- function() {
   )
   data_with_MV[c(4, 10)] <- NA
   
-  temp_pred <- impute(data_with_MV, "pwKNN", 1)
+  temp_pred <- impute(data_with_MV,  methods = "pwKNN", parameter = 1)
   pred <- temp_pred$imp
   
   data_with_MV <- matrix(
@@ -36,7 +36,7 @@ impute_test <- function() {
   )
   data_with_MV[c(4, 10)] <- NA
   
-  temp_pred <- impute(data_with_MV, "swKNN", 1)
+  temp_pred <- impute(data_with_MV, methods = "swKNN", 1)
   pred <- temp_pred$imp
   
   rank <- 3
@@ -45,23 +45,23 @@ impute_test <- function() {
   misg_data <- grnd_truth
   misg_data[temp$misg_idx] <- NA
   
-  temp_pred <- impute(misg_data, "PPCA", parameter = 3)
+  temp_pred <- impute(misg_data, methods = "PPCA", parameter = 3)
   pred <- temp_pred$imp
   print(data_with_MV_NRMSE(grnd_truth, misg_data, pred))
   
-  temp_pred <- impute(misg_data, "NIPALS", parameter = 3)
+  temp_pred <- impute(misg_data, methods = "NIPALS", parameter = 3)
   pred <- temp_pred$imp
   print(data_with_MV_NRMSE(grnd_truth, misg_data, pred))
   
-  temp_pred <- impute(misg_data, "SVD", parameter = 3)
+  temp_pred <- impute(misg_data, methods = "SVD", parameter = 3)
   pred <- temp_pred$imp
   print(data_with_MV_NRMSE(grnd_truth, misg_data, pred))
   
-  temp_pred <- impute(misg_data, "SVT", parameter = 100)
+  temp_pred <- impute(misg_data, methods = "SVT", parameter = 100)
   pred <- temp_pred$imp
   print(data_with_MV_NRMSE(grnd_truth, misg_data, pred))
   
-  temp_pred <- impute(misg_data, "FRMF", parameter = 3)
+  temp_pred <- impute(misg_data, methods = "FRMF", parameter = 3)
   pred <- temp_pred$imp
   print(data_with_MV_NRMSE(grnd_truth, misg_data, pred))
   
@@ -72,7 +72,7 @@ impute_test <- function() {
   temp_pred <-
     impute(
       misg_data,
-      "CAM_cmplt",
+      methods = "CAM_cmplt",
       parameter = 3,
       dim.rdc = 10,
       cluster.num = 35
@@ -83,7 +83,7 @@ impute_test <- function() {
   temp_pred <-
     impute(
       misg_data,
-      "CAM_NIPALS",
+      methods = "CAM_NIPALS",
       parameter = 3,
       dim.rdc = 10,
       cluster.num = 35
@@ -94,7 +94,7 @@ impute_test <- function() {
   temp_pred <-
     impute(
       misg_data,
-      "CAM_SVT",
+      methods = "CAM_SVT",
       parameter = 3,
       dim.rdc = 10,
       cluster.num = 35
@@ -105,7 +105,7 @@ impute_test <- function() {
   temp_pred <-
     impute(
       misg_data,
-      "CAM_smpClus",
+      methods = "CAM_smpClus",
       parameter = 3,
       dim.rdc = 10,
       cluster.num = 35
@@ -116,7 +116,7 @@ impute_test <- function() {
   temp_pred <-
     impute(
       misg_data,
-      "CAM_smpClus_iter",
+      methods = "CAM_smpClus_iter",
       parameter = 3,
       dim.rdc = 10,
       cluster.num = 35
@@ -127,7 +127,7 @@ impute_test <- function() {
   temp_pred <-
     impute(
       misg_data,
-      "FRMF",
+      methods = "FRMF",
       nbr_info_mat = NULL,
       nbr_thld = 0.9,
       parameter = 3

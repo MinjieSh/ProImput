@@ -1,7 +1,6 @@
 impute <- function(log_data = NULL,
-                   orig_data = NULL,
                    methods = c(
-                     "pwHalfMin (log)",
+                     "pwHalfMin_log",
                      "pwMean",
                      "swKNN",
                      "pwKNN",
@@ -20,6 +19,7 @@ impute <- function(log_data = NULL,
                      
                    ),
                    parameter = NULL,
+                   orig_data = NULL,
                    nPCs = 10,
                    # CAM_NIPALS
                    lambda = 40000,
@@ -50,7 +50,7 @@ impute <- function(log_data = NULL,
     methods,
     
     
-    "pwHalfMin (log)" = {
+    "pwHalfMin_log" = {
       show("pwHalfMin (log)")
       imp <- half_min_log(log_data)
     },
